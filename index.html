@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validação de Certidão</title>
+
+<!-- RECAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f5f5;
+}
+
+/* TOPO */
+.topo {
+  background: #0f7f79;
+  color: white;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+}
+
+/* MENU LATERAL */
+.menu {
+  width: 220px;
+  background: #1f2d3d;
+  color: white;
+  min-height: 100vh;
+  padding: 15px;
+}
+
+.menu h3 {
+  margin-top: 0;
+}
+
+.menu p {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+/* CONTEÚDO */
+.conteudo {
+  flex: 1;
+  padding: 20px;
+}
+
+/* CARDS */
+.grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  border-radius: 6px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  background: #0f7f79;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background: #7bc043;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #6aa737;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="topo">SISTEMA DE VALIDAÇÃO DE CERTIDÃO - PREFEITURA DE ARACATI</div>
+
+<div class="container">
+
+  <!-- MENU -->
+  <div class="menu">
+    <h3>Menu</h3>
+    <p>Início</p>
+    <p>Validar Documento</p>
+    <p>Consultar</p>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="conteudo">
+
+    <h2>Validar Certidão</h2>
+
+    <div class="grid">
+
+      <!-- IMÓVEL -->
+      <div class="card">
+        <div class="card-header">Certidão do Imóvel</div>
+        <div class="card-body">
+
+          <label>Inscrição do Imóvel*</label>
+          <input type="text" id="inscricao">
+
+          <label>Código de Validação*</label>
+          <input type="text" id="codigo">
+
+          <!-- RECAPTCHA -->
+          <div class="g-recaptcha" data-sitekey="6Le6FsAsAAAAAGP3gTnAO5RfHkf4_byULRa0Kjmy"></div>
+
+          <br>
+
+          <button onclick="validar()">Consultar</button>
+
+        </div>
+      </div>
+
+      <!-- EMPRESA -->
+      <div class="card">
+        <div class="card-header">Certidão da Empresa</div>
+        <div class="card-body">
+          <input type="text" placeholder="Inscrição">
+          <input type="text" placeholder="Código">
+          <button>Consultar</button>
+        </div>
+      </div>
+
+      <!-- CONTRIBUINTE -->
+      <div class="card">
+        <div class="card-header">Certidão do Contribuinte</div>
+        <div class="card-body">
+          <input type="text" placeholder="CPF/CNPJ">
+          <input type="text" placeholder="Código">
+          <button>Consultar</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const documentos = [
+  {
+    codigo: "0003E400A00000033692",
+    inscricao: "02737"
+  }
+];
+
+function validar() {
+
+  // 🔒 VERIFICA O RECAPTCHA
+  var response = grecaptcha.getResponse();
+
+  if(response.length === 0) {
+    alert("⚠️ Confirme que você não é um robô");
+    return;
+  }
+
+  let codigo = document.getElementById("codigo").value.trim();
+  let inscricao = document.getElementById("inscricao").value.trim();
+
+  let encontrado = documentos.find(doc => 
+    doc.codigo === codigo && doc.inscricao === inscricao
+  );
+
+  if (encontrado) {
+    window.location.href = "resultado.html";
+  } else {
+    alert("❌ Dados não conferem");
+  }
+}
+</script>
+
+</body>
+</html>
