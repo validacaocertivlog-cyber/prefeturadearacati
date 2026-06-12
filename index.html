@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -8,11 +9,10 @@
 <style>
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f5f5f5;
 }
 
-/* TOPO */
 .topo {
   background: #0f7f79;
   color: white;
@@ -21,12 +21,10 @@ body {
   font-weight: bold;
 }
 
-/* LAYOUT */
 .container {
   display: flex;
 }
 
-/* MENU LATERAL */
 .menu {
   width: 220px;
   background: #1f2d3d;
@@ -41,16 +39,13 @@ body {
 
 .menu p {
   margin: 10px 0;
-  cursor: pointer;
 }
 
-/* CONTEÚDO */
 .conteudo {
   flex: 1;
   padding: 20px;
 }
 
-/* CARDS */
 .grid {
   display: flex;
   gap: 20px;
@@ -60,8 +55,8 @@ body {
 .card {
   background: white;
   border-radius: 6px;
-  width: 300px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 320px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
 }
 
 .card-header {
@@ -82,13 +77,14 @@ input {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 button {
   background: #7bc043;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -102,87 +98,89 @@ button:hover {
 
 <body>
 
-<div class="topo">SISTEMA DE VALIDAÇÃO DE CERTIDÃO - PREFEITURA DE ARACATI</div>
+<div class="topo">
+SISTEMA DE VALIDAÇÃO DE CERTIDÃO - PREFEITURA DE ARACATI
+</div>
 
 <div class="container">
 
-  <!-- MENU -->
-  <div class="menu">
-    <h3>Menu</h3>
-    <p>Início</p>
-    <p>Validar Documento</p>
-    <p>Consultar</p>
-  </div>
+<div class="menu">
+<h3>Menu</h3>
+<p>Início</p>
+<p>Validar Documento</p>
+<p>Consultar</p>
+</div>
 
-  <!-- CONTEÚDO -->
-  <div class="conteudo">
+<div class="conteudo">
 
-    <h2>Validar Certidão</h2>
+<h2>Validar Certidão</h2>
 
-    <div class="grid">
+<div class="grid">
 
-      <!-- IMÓVEL -->
-      <div class="card">
-        <div class="card-header">Certidão do Imóvel</div>
-        <div class="card-body">
+<div class="card">
+<div class="card-header">Certidão do Imóvel</div>
+<div class="card-body">
 
-          <label>Inscrição do Imóvel*</label>
-          <input type="text" id="inscricao">
+<label>Inscrição do Imóvel*</label> <input type="text" id="inscricao">
 
-          <label>Código de Validação*</label>
-          <input type="text" id="codigo">
+<label>Código de Validação*</label> <input type="text" id="codigo">
 
-        
-      <!-- EMPRESA -->
-      <div class="card">
-        <div class="card-header">Certidão da Empresa</div>
-        <div class="card-body">
-          <input type="text" placeholder="Inscrição">
-          <input type="text" placeholder="Código">
-          <button>Consultar</button>
-        </div>
-      </div>
+<button onclick="validar()">Consultar</button>
 
-      <!-- CONTRIBUINTE -->
-      <div class="card">
-        <div class="card-header">Certidão do Contribuinte</div>
-        <div class="card-body">
-          <input type="text" placeholder="CPF/CNPJ">
-          <input type="text" placeholder="Código">
-          <button>Consultar</button>
-        </div>
-      </div>
+</div>
+</div>
 
-    </div>
+<div class="card">
+<div class="card-header">Certidão da Empresa</div>
+<div class="card-body">
+<input type="text" placeholder="Inscrição">
+<input type="text" placeholder="Código">
+<button>Consultar</button>
+</div>
+</div>
 
-  </div>
+<div class="card">
+<div class="card-header">Certidão do Contribuinte</div>
+<div class="card-body">
+<input type="text" placeholder="CPF/CNPJ">
+<input type="text" placeholder="Código">
+<button>Consultar</button>
+</div>
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <script>
+
 const documentos = [
-  {
-    codigo: "0003E400A00000033680",
-    inscricao: "02740"
-  }
+{
+codigo: "0003E400A00000033680",
+inscricao: "02740"
+}
 ];
 
 function validar() {
 
+const codigo = document.getElementById("codigo").value.trim().toUpperCase();
+const inscricao = document.getElementById("inscricao").value.trim();
 
-  let codigo = document.getElementById("codigo").value.trim();
-  let inscricao = document.getElementById("inscricao").value.trim();
+const encontrado = documentos.find(doc =>
+doc.codigo.toUpperCase() === codigo &&
+doc.inscricao === inscricao
+);
 
-  let encontrado = documentos.find(doc => 
-    doc.codigo === codigo && doc.inscricao === inscricao
-  );
-
-  if (encontrado) {
-    window.location.href = "resultado.html";
-  } else {
-    alert("❌ Dados não conferem");
-  }
+if (encontrado) {
+window.location.href = "resultado.html";
+} else {
+alert("Código ou inscrição inválidos.");
 }
+
+}
+
 </script>
 
 </body>
