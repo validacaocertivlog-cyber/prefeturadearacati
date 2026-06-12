@@ -135,16 +135,7 @@ button:hover {
           <label>Código de Validação*</label>
           <input type="text" id="codigo">
 
-          <!-- RECAPTCHA -->
-          <div class="g-recaptcha" data-sitekey="6Le6FsAsAAAAAGP3gTnAO5RfHkf4_byULRa0Kjmy"></div>
-
-          <br>
-
-          <button onclick="validar()">Consultar</button>
-
-        </div>
-      </div>
-
+        
       <!-- EMPRESA -->
       <div class="card">
         <div class="card-header">Certidão da Empresa</div>
@@ -181,13 +172,6 @@ const documentos = [
 
 function validar() {
 
-  // 🔒 VERIFICA O RECAPTCHA
-  var response = grecaptcha.getResponse();
-
-  if(response.length === 0) {
-    alert("⚠️ Confirme que você não é um robô");
-    return;
-  }
 
   let codigo = document.getElementById("codigo").value.trim();
   let inscricao = document.getElementById("inscricao").value.trim();
